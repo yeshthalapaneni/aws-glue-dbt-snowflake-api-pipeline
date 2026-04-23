@@ -1,0 +1,84 @@
+name: 'api_pipeline'
+version: '1.0'
+config-version: 2
+
+profile: 'api_pipeline'
+
+# -----------------------------
+# Model Paths
+# -----------------------------
+
+model-paths: ["models"]
+analysis-paths: ["analysis"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+# -----------------------------
+# Model Configuration
+# -----------------------------
+
+models:
+  api_pipeline:
+
+    staging:
+      +schema: staging
+      +materialized: view
+
+    raw:
+      +schema: raw
+      +materialized: table
+
+    transform:
+      +schema: transform
+      +materialized: table
+
+    mart:
+      +schema: mart
+      +materialized: table
+
+# -----------------------------
+# Seeds (optional)
+# -----------------------------
+
+seeds:
+  api_pipeline:
+    +schema: staging
+
+# -----------------------------
+# Tests
+# -----------------------------
+
+tests:
+  +store_failures: true
+
+# -----------------------------
+# Documentation
+# -----------------------------
+
+docs:
+  generate:
+    +enabled: true
+
+# -----------------------------
+# Vars (optional)
+# -----------------------------
+
+vars:
+  s3_stage_name: "API_S3_STAGE"
+  staging_table: "STG_API_DATA"
+
+# -----------------------------
+# Notes
+# -----------------------------
+# This configuration enforces a layered architecture:
+# - staging: lightweight views over source data
+# - raw: base structured tables
+# - transform: cleaned and enriched datasets
+# - mart: analytics-ready models
