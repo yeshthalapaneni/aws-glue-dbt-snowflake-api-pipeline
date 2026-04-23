@@ -1,0 +1,70 @@
+"""
+Configuration module for AWS Glue job.
+
+This file centralizes configuration so the job script does not rely on
+hardcoded values. In a real setup, these values can come from Glue job
+parameters, environment variables, or a config store.
+"""
+
+import os
+
+# -----------------------------
+# Environment
+# -----------------------------
+
+ENV = os.getenv("ENV", "dev")
+
+# -----------------------------
+# API Configuration
+# -----------------------------
+
+API_CONFIG = {
+    "url": os.getenv("API_URL", "https://api.example.com/data"),
+    "timeout": int(os.getenv("API_TIMEOUT", "30"))
+}
+
+# -----------------------------
+# S3 Configuration
+# -----------------------------
+
+S3_CONFIG = {
+    "bucket": os.getenv("S3_BUCKET", "your-s3-bucket-name"),
+    "prefix": os.getenv("S3_PREFIX", "raw/api_data/"),
+}
+
+# -----------------------------
+# Retry / Control Settings
+# -----------------------------
+
+JOB_CONFIG = {
+    "max_retries": int(os.getenv("MAX_RETRIES", "3")),
+    "retry_delay_seconds": int(os.getenv("RETRY_DELAY_SECONDS", "5")),
+}
+
+# -----------------------------
+# Helper Accessors (optional)
+# -----------------------------
+
+
+def get_api_url() -> str:
+    return API_CONFIG["url"]
+
+
+def get_api_timeout() -> int:
+    return API_CONFIG["timeout"]
+
+
+def get_s3_bucket() -> str:
+    return S3_CONFIG["bucket"]
+
+
+def get_s3_prefix() -> str:
+    return S3_CONFIG["prefix"]
+
+
+def get_max_retries() -> int:
+    return JOB_CONFIG["max_retries"]
+
+
+def get_retry_delay() -> int:
+    return JOB_CONFIG["retry_delay_seconds"]
