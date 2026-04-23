@@ -1,0 +1,8 @@
+# Python dependencies for AWS Glue job
+# Keep this minimal and explicit
+
+boto3==1.34.131
+requests==2.32.3
+
+# Optional (uncomment if needed)
+# python-dotenv==1.0.1
