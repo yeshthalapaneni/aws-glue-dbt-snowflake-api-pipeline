@@ -1,0 +1,71 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Distribution / packaging
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Logs and local artifacts
+*.log
+*.tmp
+*.temp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE / Editor
+.vscode/
+.idea/
+
+# Environment variables
+.env
+.env.*
+
+# dbt
+# Do not commit local profiles with credentials
+profiles.yml
+# Compiled and target artifacts
+target/
+dbt_packages/
+logs/
+
+# Snowflake worksheets / exports
+*.csv
+*.tsv
+
+# AWS / Glue temp files
+*.zip
+
+# Mac metadata
+.AppleDouble
+.LSOverride
+
+# Windows metadata
+ehthumbs.db
+Desktop.ini
+
+# Python coverage reports
+.coverage
+coverage.xml
+htmlcov/
+
+# Pytest cache
+.pytest_cache/
+
+# Mypy cache
+.mypy_cache/
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
