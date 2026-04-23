@@ -1,0 +1,57 @@
+-- Snowflake Initial Setup
+-- This script creates the core resources required for the project
+
+-- -----------------------------
+-- Create Warehouse
+-- -----------------------------
+
+CREATE WAREHOUSE IF NOT EXISTS API_PIPELINE_WH
+WITH
+    WAREHOUSE_SIZE = 'XSMALL'
+    AUTO_SUSPEND = 60
+    AUTO_RESUME = TRUE
+    INITIALLY_SUSPENDED = TRUE;
+
+-- -----------------------------
+-- Create Database and Schemas
+-- -----------------------------
+
+CREATE DATABASE IF NOT EXISTS API_PIPELINE_DB;
+
+USE DATABASE API_PIPELINE_DB;
+
+CREATE SCHEMA IF NOT EXISTS STAGING;
+CREATE SCHEMA IF NOT EXISTS RAW;
+CREATE SCHEMA IF NOT EXISTS TRANSFORM;
+CREATE SCHEMA IF NOT EXISTS MART;
+
+-- -----------------------------
+-- Create Role (optional for better structure)
+-- -----------------------------
+
+CREATE ROLE IF NOT EXISTS API_PIPELINE_ROLE;
+
+-- Grant usage permissions
+GRANT USAGE ON WAREHOUSE API_PIPELINE_WH TO ROLE API_PIPELINE_ROLE;
+GRANT USAGE ON DATABASE API_PIPELINE_DB TO ROLE API_PIPELINE_ROLE;
+GRANT USAGE ON ALL SCHEMAS IN DATABASE API_PIPELINE_DB TO ROLE API_PIPELINE_ROLE;
+
+-- Grant create permissions
+GRANT CREATE TABLE, CREATE VIEW ON ALL SCHEMAS IN DATABASE API_PIPELINE_DB TO ROLE API_PIPELINE_ROLE;
+
+-- -----------------------------
+-- Create Staging Table
+-- -----------------------------
+
+USE SCHEMA STAGING;
+
+CREATE OR REPLACE TABLE STG_API_DATA (
+    raw VARIANT,
+    ingestion_timestamp TIMESTAMP
+);
+
+-- -----------------------------
+-- Notes
+-- -----------------------------
+-- VARIANT is used to store semi-structured JSON data directly from S3.
+-- Downstream dbt models will parse and transform this into structured tables.
