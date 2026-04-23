@@ -1,0 +1,35 @@
+# dbt profile configuration (example)
+# Copy this file to ~/.dbt/profiles.yml and update with your credentials
+
+api_pipeline:
+  target: dev
+
+  outputs:
+    dev:
+      type: snowflake
+      account: "<your_account_identifier>"   # e.g. xy12345.us-east-1
+      user: "<your_username>"
+      password: "<your_password>"
+      role: "API_PIPELINE_ROLE"
+      database: "API_PIPELINE_DB"
+      warehouse: "API_PIPELINE_WH"
+      schema: "STAGING"
+      threads: 4
+      client_session_keep_alive: false
+
+    prod:
+      type: snowflake
+      account: "<your_account_identifier>"
+      user: "<your_username>"
+      password: "<your_password>"
+      role: "API_PIPELINE_ROLE"
+      database: "API_PIPELINE_DB"
+      warehouse: "API_PIPELINE_WH"
+      schema: "MART"
+      threads: 8
+      client_session_keep_alive: false
+
+# Notes:
+# - Do not commit actual credentials to GitHub
+# - Use environment variables or a secrets manager in real deployments
+# - You can also use key-pair authentication instead of username/password
