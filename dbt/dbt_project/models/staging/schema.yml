@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: stg_api_data
+    description: "Staging model that parses raw JSON data from Snowflake VARIANT column into structured fields."
+
+    columns:
+      - name: id
+        description: "Unique identifier from the API response"
+        tests:
+          - not_null
+
+      - name: name
+        description: "Name field extracted from API"
+
+      - name: status
+        description: "Status field from API"
+
+      - name: created_at
+        description: "Record creation timestamp from source"
+
+      - name: updated_at
+        description: "Record update timestamp from source"
+
+      - name: ingestion_timestamp
+        description: "Timestamp when record was ingested into S3/Snowflake"
+        tests:
+          - not_null
+
+sources:
+  - name: staging
+    database: API_PIPELINE_DB
+    schema: STAGING
+
+    tables:
+      - name: stg_api_data
+        description: "Raw staging table loaded directly from S3 using dbt macros"
