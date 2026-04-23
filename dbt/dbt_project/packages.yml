@@ -1,0 +1,11 @@
+packages:
+  - package: dbt-labs/dbt_utils
+    version: 1.3.0
+
+  - package: calogica/dbt_expectations
+    version: 0.10.3
+
+# Notes:
+# - dbt_utils provides common macros and helper functions used across dbt projects.
+# - dbt_expectations can be used to add stronger data quality checks as the project grows.
+# - Keep package versions pinned for consistency across environments.
